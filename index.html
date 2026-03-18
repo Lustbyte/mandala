@@ -38,60 +38,61 @@ html, body {
   z-index: 20; flex-shrink: 0;
 }
 .tuning {
-  font-size: 10px; font-weight: 600; letter-spacing: 1.5px; padding: 8px 16px; 
-  border-radius: 20px; background: var(--glass); border: 1px solid var(--glass-border); 
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px; padding: 8px 16px;
+  border-radius: 20px; background: var(--glass); border: 1px solid var(--glass-border);
   color: rgba(255,255,255,0.3); transition: all 0.5s; backdrop-filter: blur(10px);
 }
 .tuning.on { color: var(--fg); background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); box-shadow: 0 0 10px rgba(255,255,255,0.1); }
 .mic {
-  width: 44px; height: 44px; border-radius: 50%; background: var(--glass); 
-  border: 1px solid var(--glass-border); backdrop-filter: blur(10px); 
-  color: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; 
+  width: 44px; height: 44px; border-radius: 50%; background: var(--glass);
+  border: 1px solid var(--glass-border); backdrop-filter: blur(10px);
+  color: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center;
   font-size: 16px; cursor: pointer; transition: all 0.4s; position: relative;
 }
 .mic.on { color: var(--fg); border-color: rgba(255,255,255,0.3); box-shadow: 0 0 10px rgba(255,255,255,0.1); }
 .mic.on::after {
-  content: ''; position: absolute; inset: -6px; border-radius: 50%; 
+  content: ''; position: absolute; inset: -6px; border-radius: 50%;
   border: 1px solid rgba(255,255,255,0.3); animation: micPulse 2s ease-in-out infinite;
 }
 @keyframes micPulse { 0%, 100% { opacity: .3; transform: scale(1); } 50% { opacity: 0; transform: scale(1.2); } }
 
-/* ═══ CENTER DIAL ═══ */
-.center-dial {
-  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  pointer-events: none; position: relative;
+/* ═══ CENTER GROUP ═══ */
+#centerGroup {
+  position: absolute; pointer-events: none; z-index: 5;
+  transform: translate(-50%, -50%);
 }
 .dial-content {
-  text-align: center; z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  position: absolute; inset: 0;
   background: radial-gradient(circle, rgba(3,3,5,0.85) 0%, rgba(3,3,5,0) 70%);
-  width: 250px; height: 250px; border-radius: 50%; position: relative;
+  border-radius: 50%; z-index: -1;
 }
 
-.intro-text {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  display: flex; flex-direction: column; align-items: center;
-  transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;
+.intro-text, .note-block, .tips-center {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.intro-text.hidden { opacity: 0; }
-.intro-main { 
-  font-family: var(--serif); font-weight: 300; font-size: 12px; color: var(--gold); 
-  letter-spacing: 4px; text-transform: uppercase; white-space: nowrap; 
+.intro-text { flex-direction: column; }
+.note-block { flex-direction: column; }
+.tips-center { flex-direction: row; justify-content: space-between; pointer-events: auto; }
+
+.intro-text.hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+.note-block.hidden { opacity: 0; transform: scale(0.95); pointer-events: none; }
+.tips-center.hidden { opacity: 0; transform: scale(0.95); pointer-events: none; }
+
+.intro-main {
+  font-family: var(--serif); font-weight: 300; font-size: 12px; color: var(--gold);
+  letter-spacing: 4px; text-transform: uppercase; white-space: nowrap;
   text-shadow: 0 0 20px rgba(212,175,55,0.5); animation: breath 4s ease-in-out infinite;
 }
-.intro-sub { 
-  font-family: var(--sans); font-size: 8px; font-weight: 500; color: rgba(255,255,255,0.4); 
+.intro-sub {
+  font-family: var(--sans); font-size: 8px; font-weight: 500; color: rgba(255,255,255,0.4);
   letter-spacing: 3px; margin-top: 8px; text-transform: uppercase; white-space: nowrap;
 }
 @keyframes breath { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
 
-.note-block {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; transform: scale(1);
-}
-.note-block.hidden { opacity: 0; transform: scale(0.95); pointer-events: none; }
-
 .main-note {
-  font-family: var(--serif); font-weight: 400; font-size: clamp(70px, 18vw, 110px);
+  font-family: var(--serif); font-weight: 400; font-size: clamp(80px, 20vw, 120px);
   line-height: 1; color: var(--gold); letter-spacing: -2px;
   text-shadow: 0 0 50px var(--gold-dim), 0 0 100px rgba(212, 175, 55, 0.2);
 }
@@ -108,10 +109,28 @@ html, body {
   color: rgba(255,255,255,0.4); margin-top: 6px; min-height: 18px;
 }
 
-/* ═══ FLOATING INTERVALS ═══ */
+/* ═══ TIPS CENTER ═══ */
+.tip-nav {
+  background: transparent; border: none; color: rgba(255,255,255,0.2);
+  font-size: 36px; cursor: pointer; padding: 15px 20px; outline: none; transition: color 0.3s;
+  font-family: var(--sans); font-weight: 200; z-index: 10;
+}
+.tip-nav:hover, .tip-nav:active { color: var(--gold); }
+.tip-content-box {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.tip-cat {
+  color: var(--gold); font-family: var(--sans); font-size: 9px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.tip-item { margin-bottom: 14px; text-align: center; }
+.tip-chord { font-family: var(--serif); font-size: 20px; color: rgba(255,255,255,0.8); letter-spacing: 4px; }
+.tip-desc { font-family: var(--serif); font-style: italic; font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px; letter-spacing: 0.5px; }
+
+/* ═══ FLOATING INTERVALS (TOP ARC) ═══ */
 #pillBox { position: fixed; z-index: 6; pointer-events: none; }
 .cpill {
-  position: absolute; left: 0; top: 0; opacity: 0; 
+  position: absolute; left: 0; top: 0; opacity: 0;
   transition: opacity 1.5s cubic-bezier(.4,0,.2,1);
   text-align: center; white-space: nowrap;
   animation: drift 8s ease-in-out infinite;
@@ -121,26 +140,37 @@ html, body {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
 .cpill-n {
-  font-family: var(--serif); font-weight: 300; font-size: 30px; color: var(--gold);
+  font-family: var(--serif); font-weight: 300; font-size: 32px; color: var(--gold);
   line-height: 1; transition: color 0.5s;
   text-shadow: 0 0 30px rgba(0,0,0,0.9), 0 0 20px rgba(212,175,55,0.6);
 }
 .cpill-sub { display: flex; flex-direction: column; align-items: center; margin-top: 4px; }
-.cpill-int { 
-  font-family: var(--sans); font-size: 9px; font-weight: 500; letter-spacing: 3px; 
+.cpill-int {
+  font-family: var(--sans); font-size: 9px; font-weight: 500; letter-spacing: 3px;
   color: rgba(255,255,255,0.6); text-transform: uppercase;
   text-shadow: 0 2px 8px rgba(0,0,0,0.9);
 }
-.cpill-feel { 
-  font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.4); margin-top: 2px; 
+.cpill-feel {
+  font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.4); margin-top: 2px;
   font-family: var(--serif); font-style: italic; letter-spacing: 1px;
 }
 @keyframes drift {
   0%, 100% { transform: translate(var(--px), var(--py)); }
-  25% { transform: translate(calc(var(--px) + 4px), calc(var(--py) - 6px)); }
-  50% { transform: translate(calc(var(--px) - 3px), calc(var(--py) - 2px)); }
-  75% { transform: translate(calc(var(--px) + 2px), calc(var(--py) + 4px)); }
+  25% { transform: translate(calc(var(--px) + 3px), calc(var(--py) - 4px)); }
+  50% { transform: translate(calc(var(--px) - 2px), calc(var(--py) - 1px)); }
+  75% { transform: translate(calc(var(--px) + 1px), calc(var(--py) + 3px)); }
 }
+
+/* ═══ TIPS BUTTON ═══ */
+.tips-toggle {
+  position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%);
+  background: transparent; border: 1px solid rgba(212,175,55,0.3);
+  color: var(--gold); padding: 8px 32px; border-radius: 20px;
+  font-size: 10px; font-weight: 500; letter-spacing: 3px; cursor: pointer;
+  z-index: 30; backdrop-filter: blur(10px); transition: all 0.3s;
+  pointer-events: auto; outline: none;
+}
+.tips-toggle.active { background: rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.6); }
 
 /* ═══ BOTTOM METERS (HORIZONTAL) ═══ */
 .bottom-section {
@@ -148,9 +178,9 @@ html, body {
   padding: 0 24px max(env(safe-area-inset-bottom), 30px);
   display: flex; justify-content: space-between; align-items: flex-end;
   background: linear-gradient(0deg, rgba(3,3,5,0.9) 0%, rgba(3,3,5,0) 100%);
-  pointer-events: none;
+  pointer-events: none; z-index: 20;
 }
-.meter-col { 
+.meter-col {
   display: flex; flex-direction: column; gap: 8px; width: calc(50% - 20px); max-width: 160px;
   pointer-events: auto;
 }
@@ -158,8 +188,8 @@ html, body {
 .meter-col.right { align-items: flex-end; }
 
 .meter-header { display: flex; justify-content: space-between; width: 100%; align-items: baseline; }
-.meter-label { font-size: 9px; font-weight: 600; letter-spacing: 2px; color: rgba(255,255,255,0.4); text-transform: uppercase; }
-.meter-val { font-family: var(--sans); font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.5); letter-spacing: 1px; transition: color 0.3s; }
+.meter-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; color: rgba(255,255,255,0.6); text-transform: uppercase; white-space: nowrap; }
+.meter-val { font-family: var(--sans); font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.8); letter-spacing: 1px; transition: color 0.3s; white-space: nowrap; }
 
 .meter-capsule {
   width: 100%; height: 16px; border-radius: 8px; background: rgba(255,255,255,0.02);
@@ -214,35 +244,44 @@ html, body {
     <div class="mic" id="mic">🎙</div>
   </div>
 
-  <div class="center-dial" id="centerEl">
-    <div class="dial-content">
-      <div class="intro-text" id="introTxt">
-        <div class="intro-main">AWAKEN THE BOWL</div>
-        <div class="intro-sub">TO INITIATE RESONANCE</div>
-      </div>
-      <div class="note-block hidden" id="noteBlock">
-        <div class="main-note" id="nN"></div>
-        <div class="n-cents" id="nC"></div>
-        <div class="octave-label" id="nO"></div>
-        <div class="tuning-hz" id="nHz"></div>
-      </div>
+  <div id="centerGroup">
+    <div class="dial-content" id="dContent"></div>
+
+    <div class="intro-text" id="introTxt">
+      <div class="intro-main">PAMODINIET TRAUKU</div>
+      <div class="intro-sub">LAI RADĪTU REZONANSI</div>
+    </div>
+
+    <div class="note-block hidden" id="noteBlock">
+      <div class="main-note" id="nN"></div>
+      <div class="n-cents" id="nC"></div>
+      <div class="octave-label" id="nO"></div>
+      <div class="tuning-hz" id="nHz"></div>
+    </div>
+
+    <div class="tips-center hidden" id="tipsCenter">
+      <button class="tip-nav" id="tipPrev">‹</button>
+      <div id="tipTextCenter" class="tip-content-box"></div>
+      <button class="tip-nav" id="tipNext">›</button>
     </div>
   </div>
+
+  <button id="tipsBtn" class="tips-toggle">PADOMI</button>
 
   <div class="bottom-section" id="botSec">
     <div class="meter-col left" style="position:relative;">
       <div class="m-warn" id="vW"></div>
       <div class="meter-header">
-        <span class="meter-label">VOL</span>
+        <span class="meter-label">SKAĻUMS</span>
         <span class="meter-val" id="vV">—</span>
       </div>
       <div class="meter-capsule"><div class="meter-fill fill-vol" id="vF"></div></div>
     </div>
-    
+
     <div class="meter-col right">
       <div class="meter-header">
+        <span class="meter-label">TĪRĪBA</span>
         <span class="meter-val" id="pV">—</span>
-        <span class="meter-label">PURE</span>
       </div>
       <div class="meter-capsule"><div class="meter-fill fill-pur" id="pF"></div></div>
     </div>
@@ -255,7 +294,7 @@ html, body {
   <div class="ov-brand">
     <div class="ov-logo">VYBRA</div>
   </div>
-  <button class="go-btn" id="go">ENTER</button>
+  <button class="go-btn" id="go">SĀKT</button>
 </div>
 
 <script>
@@ -271,13 +310,13 @@ const NAT = [
 ];
 
 const CONS = {
-  C: [{n:'F', i:'Fourth', f:'Open, calming'}, {n:'G', i:'Fifth', f:'Stable, grounding'}, {n:'E', i:'Third', f:'Warm, bright'}],
-  D: [{n:'G', i:'Fourth', f:'Open, calming'}, {n:'A', i:'Fifth', f:'Stable, grounding'}, {n:'F', i:'Third', f:'Soft, tender'}],
-  E: [{n:'A', i:'Fourth', f:'Open, calming'}, {n:'B', i:'Fifth', f:'Stable, grounding'}, {n:'G', i:'Third', f:'Soft, tender'}],
-  F: [{n:'C', i:'Fifth', f:'Stable, grounding'}, {n:'A', i:'Third', f:'Warm, bright'}, {n:'D', i:'Sixth', f:'Joyful, uplifting'}],
-  G: [{n:'C', i:'Fourth', f:'Open, calming'}, {n:'D', i:'Fifth', f:'Stable, grounding'}, {n:'B', i:'Third', f:'Warm, bright'}],
-  A: [{n:'D', i:'Fourth', f:'Open, calming'}, {n:'E', i:'Fifth', f:'Stable, grounding'}, {n:'C', i:'Third', f:'Soft, tender'}],
-  B: [{n:'E', i:'Fourth', f:'Open, calming'}, {n:'G', i:'Third', f:'Soft, tender'}, {n:'D', i:'Third', f:'Soft, tender'}]
+  C: [{n:'F', i:'Kvarta', f:'Atvērts, nomierinošs'}, {n:'G', i:'Kvinta', f:'Stabils, sazemējošs'}, {n:'E', i:'Tercija', f:'Silts, gaišs'}],
+  D: [{n:'G', i:'Kvarta', f:'Atvērts, nomierinošs'}, {n:'A', i:'Kvinta', f:'Stabils, sazemējošs'}, {n:'F', i:'Tercija', f:'Maigs, trausls'}],
+  E: [{n:'A', i:'Kvarta', f:'Atvērts, nomierinošs'}, {n:'B', i:'Kvinta', f:'Stabils, sazemējošs'}, {n:'G', i:'Tercija', f:'Maigs, trausls'}],
+  F: [{n:'C', i:'Kvinta', f:'Stabils, sazemējošs'}, {n:'A', i:'Tercija', f:'Silts, gaišs'}, {n:'D', i:'Seksta', f:'Priecīgs, pacilājošs'}],
+  G: [{n:'C', i:'Kvarta', f:'Atvērts, nomierinošs'}, {n:'D', i:'Kvinta', f:'Stabils, sazemējošs'}, {n:'B', i:'Tercija', f:'Silts, gaišs'}],
+  A: [{n:'D', i:'Kvarta', f:'Atvērts, nomierinošs'}, {n:'E', i:'Kvinta', f:'Stabils, sazemējošs'}, {n:'C', i:'Tercija', f:'Maigs, trausls'}],
+  B: [{n:'E', i:'Kvarta', f:'Atvērts, nomierinošs'}, {n:'G', i:'Tercija', f:'Maigs, trausls'}, {n:'D', i:'Tercija', f:'Maigs, trausls'}]
 };
 
 const S = {
@@ -296,18 +335,69 @@ const S = {
 let actx, ana, tBuf, fBuf, running = false;
 let bCx = 0, bCy = 0, rR = 0;
 let cpills = [];
+let tipsActive = false;
+
+const TIPS = [
+  {
+    icon: '🌿', title: 'STABILIZĒJOŠAS',
+    items: [
+      { c: 'C – G – C', d: 'Balsts un miers' },
+      { c: 'F – A – C', d: 'Relaksācija' },
+      { c: 'D – G – B', d: 'Gaisīgs skaidrums' }
+    ]
+  },
+  {
+    icon: '🌑', title: 'MEDITATĪVAS',
+    items: [
+      { c: 'A – E – C', d: 'Centrējošs efekts' },
+      { c: 'C – F – G', d: 'Dziļa meditācija' }
+    ]
+  },
+  {
+    icon: '✨', title: 'AKTIVIZĒJOŠAS',
+    items: [
+      { c: 'E – A – D', d: 'Piepilda ar enerģiju' },
+      { c: 'G – C – D', d: 'Kustība uz priekšu' }
+    ]
+  }
+];
+let tipIdx = 0;
+const tipTextCenter = $('tipTextCenter');
+
+function updateTipContent() {
+  const t = TIPS[tipIdx];
+  let html = `<div class="tip-cat"><span>${t.icon}</span><span>${t.title}</span></div>`;
+  t.items.forEach(i => {
+    html += `<div class="tip-item"><div class="tip-chord">${i.c}</div><div class="tip-desc">${i.d}</div></div>`;
+  });
+  tipTextCenter.innerHTML = html;
+}
+updateTipContent();
+
+$('tipsBtn').onclick = () => {
+  tipsActive = !tipsActive;
+  $('tipsBtn').classList.toggle('active', tipsActive);
+  upd();
+};
+$('tipPrev').onclick = () => { tipIdx = (tipIdx - 1 + TIPS.length) % TIPS.length; updateTipContent(); };
+$('tipNext').onclick = () => { tipIdx = (tipIdx + 1) % TIPS.length; updateTipContent(); };
 
 function layout() {
   const p = Math.min(devicePixelRatio || 1, 2);
-  cv.width = innerWidth * p; cv.height = innerHeight * p; 
+  cv.width = innerWidth * p; cv.height = innerHeight * p;
   cx.setTransform(p, 0, 0, p, 0, 0);
-  
-  bCx = innerWidth / 2; 
-  bCy = innerHeight / 2; // Центруем визуализацию по экрану
-  
-  // Максимизируем мандалу. Шкалы теперь внизу горизонтально и не мешают.
+
+  bCx = innerWidth / 2;
+  bCy = innerHeight / 2 - 20;
+
   rR = Math.max(10, Math.min(innerWidth * 0.46, innerHeight * 0.42));
-  
+
+  const cg = $('centerGroup');
+  cg.style.left = bCx + 'px';
+  cg.style.top = bCy + 'px';
+  cg.style.width = (rR * 2) + 'px';
+  cg.style.height = (rR * 2) + 'px';
+
   $('pillBox').style.left = bCx + 'px'; $('pillBox').style.top = bCy + 'px';
 }
 addEventListener('resize', layout); setTimeout(layout, 60);
@@ -334,11 +424,11 @@ function yin(buf, sr) {
 function f2nat(freq, refA) {
   const midi = 12 * Math.log2(freq/refA) + 69;
   let bestD = 999, bestN = null, bestM = 0;
-  for(let oct=1; oct<=7; oct++){ 
-    for(const nt of NAT){ 
-      const nm = nt.s + (oct+1)*12; const d = Math.abs(midi-nm); 
-      if(d<bestD){ bestD=d; bestN=nt; bestM=nm; } 
-    } 
+  for(let oct=1; oct<=7; oct++){
+    for(const nt of NAT){
+      const nm = nt.s + (oct+1)*12; const d = Math.abs(midi-nm);
+      if(d<bestD){ bestD=d; bestN=nt; bestM=nm; }
+    }
   }
   return { name: bestN.n, octave: Math.floor(bestM/12)-1, cents: Math.round((midi-bestM)*100), col: bestN.c };
 }
@@ -357,8 +447,8 @@ function purity(fD, fund, sr) {
   const bHz = sr/(fD.length*2), hw = Math.ceil(25/bHz);
   let hE = 0, tE = 0;
   for(let i=1; i<fD.length; i++){ const a=Math.max(0,(fD[i]+100)/80); tE+=a*a; }
-  for(let h=1; h<=6; h++){ 
-    const hb=Math.round(fund*h/bHz); 
+  for(let h=1; h<=6; h++){
+    const hb=Math.round(fund*h/bHz);
     for(let i=Math.max(1,hb-hw); i<=Math.min(fD.length-1,hb+hw); i++){ const a=Math.max(0,(fD[i]+100)/80); hE+=a*a; }
   }
   return tE>0 ? Math.min(1, hE/tE*1.6) : 0;
@@ -367,33 +457,36 @@ function purity(fD, fund, sr) {
 function rms(b) { let s=0; for(let i=0; i<b.length; i++) s+=b[i]*b[i]; return Math.sqrt(s/b.length); }
 function rmsToSpl(r) { return r>0 ? 20*Math.log10(r)+94 : 30; }
 
-const PILL_POS = [ {ax:-0.7, ay:-0.6}, {ax:0.7, ay:-0.6}, {ax:0, ay:0.8} ];
-
 function buildPills(note, oct) {
   const box = $('pillBox'); cpills.forEach(p => p.el && p.el.remove()); cpills = [];
   const pairs = CONS[note] || [];
-  
-  // Жестко ограничиваем вылет интервалов за пределы ширины телефона
-  const maxPr = (innerWidth / 2) - 50; 
-  const pr = Math.min(rR * 1.05, maxPr); 
 
-  // Vertical clamp: keep pills away from top bar (~80px) and bottom meters (~90px)
-  const pyMin = -(bCy - 90);
-  const pyMax =  (bCy - 110);
+  const pr = rR + 70;
+  const angles = [-Math.PI * 0.75, -Math.PI * 0.5, -Math.PI * 0.25];
+
+  // Screen bounds for clamping (relative to pillBox centre at bCx, bCy)
+  const PILL_W = 90, PILL_H = 68;
+  const pxMin = -(bCx - PILL_W / 2 - 16);
+  const pxMax =  (bCx - PILL_W / 2 - 16);
+  const pyMin = -(bCy - 88 - PILL_H / 2);
+  const pyMax =  (bCy - 110 - PILL_H / 2);
 
   pairs.forEach((p, i) => {
-    const pos = PILL_POS[i % PILL_POS.length];
-    const px = pos.ax * pr;
-    const py = Math.max(pyMin, Math.min(pyMax, pos.ay * pr));
+    const angle = angles[i % angles.length];
+    const rawPx = Math.cos(angle) * pr;
+    const rawPy = Math.sin(angle) * pr;
+    const px = Math.max(pxMin, Math.min(pxMax, rawPx));
+    const py = Math.max(pyMin, Math.min(pyMax, rawPy));
+
     const el = document.createElement('div'); el.className = 'cpill';
     el.style.setProperty('--px', px + 'px'); el.style.setProperty('--py', py + 'px');
     el.style.transform = `translate(calc(-50% + ${px}px),calc(-50% + ${py}px))`;
     el.style.animationDelay = (i * 1.2) + 's';
-    
+
     const ntData = NAT.find(x => x.n === p.n) || {c: [200,200,200]};
     const cStr = rgb(ntData.c);
     const ts = `0 0 30px rgba(0,0,0,0.9), 0 0 20px rgba(${ntData.c[0]},${ntData.c[1]},${ntData.c[2]},0.6)`;
-    
+
     el.innerHTML = `<div class="cpill-inner"><div class="cpill-n" style="color:${cStr}; text-shadow:${ts}">${p.n}${oct}</div><div class="cpill-sub"><span class="cpill-int">${p.i}</span><span class="cpill-feel">${p.f}</span></div></div>`;
     box.appendChild(el); cpills.push({el, delay: i * 350});
   });
@@ -408,13 +501,12 @@ function proc() {
   if(!running) return;
   ana.getFloatTimeDomainData(tBuf); ana.getFloatFrequencyData(fBuf);
   const sr = actx.sampleRate, r = rms(tBuf);
-  S.rmsRaw = r; 
-  
-  // Логарифмическая модель чувствительности громкости для комнатного шума (35-85 dB)
+  S.rmsRaw = r;
+
   S.dBspl = rmsToSpl(r);
   S.vol = Math.max(0, Math.min(1, (S.dBspl - 35) / 42));
   S.playing = r > 0.0015;
-  
+
   if(S.playing) {
     silenceFrames = 0;
     if(S.fc % 3 === 0) {
@@ -423,7 +515,7 @@ function proc() {
         S.freq = f; updTuning(f);
         const ref = S.tuning || 440; const info = f2nat(f, ref);
         S.noteName = info.name; S.noteOct = info.octave; S.cents = info.cents; S.col = info.col;
-        
+
         const key = info.name + info.octave;
         if(key === S.cand) {
           S.cCount++;
@@ -433,12 +525,12 @@ function proc() {
             if(navigator.vibrate) navigator.vibrate(25);
           }
         } else { S.cand = key; S.cCount = 0; }
-        
+
         S.pur = purity(fBuf, f, sr);
       }
     }
-    if(S.confirmed) { 
-      S.stable = Math.min(S.stable + 1, S.maxStable); 
+    if(S.confirmed) {
+      S.stable = Math.min(S.stable + 1, S.maxStable);
       if(S.stable >= S.maxStable && !S.sugShow) { S.sugShow = true; showPills(); }
     }
   } else {
@@ -450,51 +542,64 @@ function proc() {
 }
 
 function upd() {
-  S.dVol = lp(S.dVol, S.vol, 0.08); 
+  S.dVol = lp(S.dVol, S.vol, 0.08);
   S.dPur = lp(S.dPur, S.pur, 0.04);
   S.dCol = lpc(S.dCol, S.playing && S.confirmed ? S.confCol : [212, 175, 55], 0.03);
   S.dFreq = lp(S.dFreq, S.freq, 0.05); S.dCents = lp(S.dCents, S.cents, 0.05);
-  
+
   S.hTimer++;
   if(Math.abs(S.dCents - S.hCents) > 1 || S.hTimer > 40) { S.hCents = S.dCents; S.hTimer = 0; }
   if(Math.abs(S.dFreq - S.hFreq) > 0.5) { S.hFreq = S.dFreq; }
 
-  if(S.confirmed && S.playing) {
+  // Close tips when sound detected
+  if(tipsActive && S.playing && S.confirmed) {
+    tipsActive = false;
+    $('tipsBtn').classList.remove('active');
+  }
+
+  if(tipsActive) {
+    $('tipsCenter').classList.remove('hidden');
     $('introTxt').classList.add('hidden');
-    $('noteBlock').classList.remove('hidden');
-    
-    $('nN').textContent = S.confirmed;
-    $('nO').textContent = 'OCTAVE ' + S.confOct;
-    $('nN').style.color = rgb(S.dCol);
-    $('nN').style.textShadow = `0 0 50px ${rgba(S.dCol, 0.6)}, 0 0 100px ${rgba(S.dCol, 0.3)}`;
-    $('nHz').textContent = S.hFreq.toFixed(1) + ' Hz';
-    
-    const cv = Math.round(S.hCents);
-    $('nC').textContent = (cv >= 0 ? '+' : '') + cv + ' ¢';
-    $('nC').style.color = Math.abs(cv) < 5 ? '#4ade80' : Math.abs(cv) < 15 ? 'var(--gold)' : '#ef4444';
-  } else if(S.dVol < 0.01) {
-    $('introTxt').classList.remove('hidden');
     $('noteBlock').classList.add('hidden');
+  } else {
+    $('tipsCenter').classList.add('hidden');
+    if(S.confirmed && S.playing) {
+      $('introTxt').classList.add('hidden');
+      $('noteBlock').classList.remove('hidden');
+
+      $('nN').textContent = S.confirmed;
+      $('nO').textContent = 'OKTĀVA ' + S.confOct;
+      $('nN').style.color = rgb(S.dCol);
+      $('nN').style.textShadow = `0 0 50px ${rgba(S.dCol, 0.6)}, 0 0 100px ${rgba(S.dCol, 0.3)}`;
+      $('nHz').textContent = S.hFreq.toFixed(1) + ' Hz';
+
+      const cv = Math.round(S.hCents);
+      $('nC').textContent = (cv >= 0 ? '+' : '') + cv + ' ¢';
+      $('nC').style.color = Math.abs(cv) < 5 ? '#4ade80' : Math.abs(cv) < 15 ? 'var(--gold)' : '#ef4444';
+    } else if(S.dVol < 0.01) {
+      $('introTxt').classList.remove('hidden');
+      $('noteBlock').classList.add('hidden');
+    }
   }
 
   const tb = $('tun');
-  if(S.tuning) { tb.textContent = S.tuning + ' Hz'; tb.classList.add('on'); } 
+  if(S.tuning) { tb.textContent = S.tuning + ' Hz'; tb.classList.add('on'); }
   else { tb.textContent = '—'; tb.classList.remove('on'); }
 
   const spl = Math.round(S.dBspl); const loud = spl >= 85, danger = spl >= 95; const vp = Math.round(S.dVol * 100);
-  
+
   $('vF').style.width = vp + '%';
   $('vV').textContent = spl > 35 ? '~' + spl + ' dB' : '—';
-  
+
   const vw = $('vW');
-  if(danger) { vw.textContent = 'DANGER'; vw.className = 'm-warn danger show'; }
-  else if(loud) { vw.textContent = 'LOUD'; vw.className = 'm-warn loud show'; }
+  if(danger) { vw.textContent = 'BĪSTAMI'; vw.className = 'm-warn danger show'; }
+  else if(loud) { vw.textContent = 'SKAĻI'; vw.className = 'm-warn loud show'; }
   else { vw.className = 'm-warn'; }
-  
+
   const pp = Math.round(S.dPur * 100);
   $('pF').style.width = pp + '%';
   $('pV').textContent = S.playing ? pp + '%' : '—';
-  
+
   $('vF').style.boxShadow = `0 0 ${15 + vp*0.4}px ${danger ? 'rgba(239,68,68,0.6)' : loud ? 'rgba(245,158,11,0.6)' : `rgba(255,255,255,${vp/150})`}`;
   $('pF').style.boxShadow = `0 0 ${15 + pp*0.4}px rgba(255,255,255,${pp/150})`;
 }
@@ -502,7 +607,7 @@ function upd() {
 function draw() {
   const W = innerWidth, H = innerHeight;
   S.time += 0.005 + (S.dVol * 0.02);
-  
+
   cx.fillStyle = '#030305';
   cx.fillRect(0, 0, W, H);
   if(!bCx) return;
@@ -514,119 +619,122 @@ function draw() {
   cx.fillStyle = bgGlow;
   cx.fillRect(0, 0, W, H);
 
-  const steps = 64; 
+  const steps = 64;
   if(fBuf && running) {
     const sr = actx.sampleRate, bins = fBuf.length, maxF = 2000, minF = 40;
     for(let i=0; i<steps; i++) {
       const f = minF * Math.pow(maxF/minF, i/steps);
       const bin = Math.round(f / (sr / (bins * 2)));
       const raw = bin >= 0 && bin < bins ? Math.max(0, (fBuf[bin] + 100) / 80) : 0;
-      S.specSmooth[i] = lp(S.specSmooth[i] || 0, raw, 0.1); 
+      S.specSmooth[i] = lp(S.specSmooth[i] || 0, raw, 0.1);
     }
   }
 
   cx.save();
   cx.translate(bCx, bCy);
-  
+
   cx.globalCompositeOperation = 'screen';
   const volImpact = S.dVol;
-  const numPetals = 24; 
-  
+  const numPetals = 24;
+
   for(let layer = 0; layer < 4; layer++) {
-    const layerOffset = layer * (Math.PI / numPetals); 
+    const layerOffset = layer * (Math.PI / numPetals);
     const rotation = S.time * (layer % 2 === 0 ? 0.1 : -0.15);
-    
+
     for(let i = 0; i < numPetals; i++) {
-      const specIdx = i < numPetals/2 ? 
-          Math.floor((i / (numPetals/2)) * steps) : 
+      const specIdx = i < numPetals/2 ?
+          Math.floor((i / (numPetals/2)) * steps) :
           Math.floor(((numPetals - i) / (numPetals/2)) * steps);
-          
+
       const energy = S.specSmooth[specIdx] || 0;
       const angle = (i / numPetals) * Math.PI * 2 + rotation + layerOffset;
-      
-      const baseR = rR * 0.55; 
+
+      const baseR = rR * 0.55;
       const maxStretch = rR * (0.4 + layer * 0.2);
-      
+
       let stretchDelta = (energy * maxStretch * (0.3 + volImpact * 0.7)) + (Math.sin(S.time * 3 + i) * 8 * volImpact);
-      stretchDelta = Math.max(0.1, stretchDelta); 
+      stretchDelta = Math.max(0.1, stretchDelta);
       const stretchR = baseR + stretchDelta;
-      
+
       cx.save();
       cx.rotate(angle);
-      
+
       cx.beginPath();
       cx.moveTo(0, baseR * 0.8);
-      
-      const cpW = baseR * (0.15 + energy * 0.1); 
-      
+
+      const cpW = baseR * (0.15 + energy * 0.1);
+
       cx.quadraticCurveTo(cpW, baseR + stretchDelta * 0.5, 0, stretchR);
       cx.quadraticCurveTo(-cpW, baseR + stretchDelta * 0.5, 0, baseR * 0.8);
-      
+
       const pGrad = cx.createRadialGradient(0, baseR, 0, 0, stretchR, stretchDelta);
       pGrad.addColorStop(0, rgba(S.dCol, 0.15 + layer * 0.05 + energy * 0.2));
       pGrad.addColorStop(0.6, rgba(S.dCol, 0.05 + energy * 0.1));
       pGrad.addColorStop(1, 'rgba(0,0,0,0)');
-      
+
       cx.fillStyle = pGrad;
       cx.fill();
-      
+
       cx.strokeStyle = rgba(S.dCol, 0.1 + energy * 0.3);
       cx.lineWidth = 1;
       cx.stroke();
-      
+
       cx.restore();
     }
   }
 
   cx.restore();
-  
+
   const cgRadius = Math.max(1, rR * 0.55);
   const cg = cx.createRadialGradient(bCx, bCy, 0, bCx, bCy, cgRadius);
-  cg.addColorStop(0, 'rgba(3,3,5,0.9)'); 
+  cg.addColorStop(0, 'rgba(3,3,5,0.9)');
   cg.addColorStop(0.7, 'rgba(3,3,5,0.7)');
   cg.addColorStop(1, 'rgba(3,3,5,0)');
   cx.globalCompositeOperation = 'source-over';
-  cx.fillStyle = cg; 
+  cx.fillStyle = cg;
   cx.fillRect(0, 0, W, H);
 
   cx.save();
   cx.translate(bCx, bCy);
 
   const prog = S.stable / S.maxStable;
-  const ringR = rR * 0.45; 
+  const ringR = rR * 0.45;
 
   cx.beginPath(); cx.arc(0, 0, ringR, 0, Math.PI*2);
   cx.strokeStyle = rgba(S.dCol, 0.08); cx.lineWidth = 2; cx.stroke();
 
   if(prog > 0.001) {
     cx.globalCompositeOperation = 'source-over';
-    
+
     cx.beginPath();
-    const ringPts = 300; 
-    const targetPts = Math.floor(ringPts * prog);
-    
+    const ringPts = 300;
+    const exactEndAngle = -Math.PI/2 + Math.PI*2*prog;
+    const targetPts = Math.ceil(ringPts * prog);
+
     let highEnergy = 0;
     for(let k=30; k<steps; k++) highEnergy += S.specSmooth[k] || 0;
-    const timbreFactor = Math.min(1, highEnergy * 0.1);
-    const pitchWaveSpd = 1 + (S.hFreq % 50) / 50;
-    
+    const timbreFactor = Math.min(1, highEnergy * 0.15);
+    const pitchWaveSpd = 0.5 + ((S.hFreq||100) / 1000);
+
     for(let i=0; i<=targetPts; i++) {
-      const ang = -Math.PI/2 + (i/ringPts) * Math.PI * 2;
-      
-      const w1 = Math.sin(ang * 3 + S.time * pitchWaveSpd * 2);
-      const w2 = Math.cos(ang * 5 - S.time * 1.5);
-      const w3 = Math.sin(ang * 8 + S.time * 3) * timbreFactor; 
-      
-      const mod = (w1 + w2 * 0.5 + w3) * (2 + timbreFactor * 3) * S.dVol * prog;
+      let ang = -Math.PI/2 + (i/ringPts) * Math.PI * 2;
+      if(i === targetPts) ang = exactEndAngle;
+
+      const w1 = Math.sin(ang * 2 + S.time * pitchWaveSpd * 3);
+      const w2 = Math.cos(ang * 3 - S.time * 2);
+      const w3 = Math.sin(ang * 5 + S.time * 4) * timbreFactor;
+
+      const mod = (w1 + w2 * 0.6 + w3) * (2 + timbreFactor * 4) * S.dVol * Math.pow(prog, 0.5);
       const r = ringR + mod;
-      
+
       if(i===0) cx.moveTo(Math.cos(ang)*r, Math.sin(ang)*r);
       else cx.lineTo(Math.cos(ang)*r, Math.sin(ang)*r);
     }
-    
+
     cx.strokeStyle = rgba(S.dCol, 0.6 + 0.4*prog);
     cx.lineWidth = 2 + 3*prog;
     cx.lineCap = 'round';
+    cx.lineJoin = 'round';
     cx.shadowColor = rgb(S.dCol);
     cx.shadowBlur = 20 * prog + 10;
     cx.stroke();
@@ -645,15 +753,15 @@ function draw() {
     }
   }
 
-  if (S.particles.length > 0) {
+  if(S.particles.length > 0) {
     cx.globalCompositeOperation = 'screen';
-    for (let i = S.particles.length - 1; i >= 0; i--) {
+    for(let i = S.particles.length - 1; i >= 0; i--) {
       let p = S.particles[i];
       p.r += p.speed;
-      p.ang += 0.015; 
+      p.ang += 0.015;
       p.life -= p.decay;
-      
-      if (p.life <= 0) {
+
+      if(p.life <= 0) {
         S.particles.splice(i, 1);
       } else {
         cx.fillStyle = rgba(S.dCol, p.life);
@@ -664,7 +772,7 @@ function draw() {
         cx.fill();
       }
     }
-    cx.shadowBlur = 0; 
+    cx.shadowBlur = 0;
   }
 
   cx.restore();
@@ -692,7 +800,7 @@ async function start() {
     $('ov').classList.add('hide');
     layout(); loop();
     requestWakeLock();
-  } catch(e) { alert('Microphone access required for resonance detection.'); }
+  } catch(e) { alert('Lai noteiktu rezonansi, nepieciešama piekļuve mikrofonam.'); }
 }
 
 $('go').onclick = start; $('mic').onclick = start; $('ov').onclick = start;
