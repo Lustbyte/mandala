@@ -144,23 +144,27 @@ html, body {
   75% { transform: translate(calc(var(--px) + 2px), calc(var(--py) + 4px)); }
 }
 
-/* ═══ SIDE METERS (NEUTRAL GLASS) ═══ */
-.meter-col {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 10px; width: 40px;
-  z-index: 20; pointer-events: auto;
+/* ═══ BOTTOM METERS (NEUTRAL GLASS) ═══ */
+.bottom-section {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 0 40px max(env(safe-area-inset-bottom), 40px);
+  display: flex; justify-content: center; gap: 60px; z-index: 20;
+  background: linear-gradient(0deg, rgba(3,3,5,0.9) 0%, rgba(3,3,5,0) 100%);
+  pointer-events: none;
 }
-.meter-col.left { left: 16px; }
-.meter-col.right { right: 16px; }
+.meter-col {
+  display: flex; flex-direction: column; align-items: center; gap: 10px; width: 40px;
+  pointer-events: auto;
+}
 .meter-label { font-size: 9px; font-weight: 600; letter-spacing: 2px; color: rgba(255,255,255,0.4); text-transform: uppercase; }
 .meter-capsule {
-  width: 30px; height: 180px; border-radius: 15px; background: rgba(255,255,255,0.02);
+  width: 34px; height: 160px; border-radius: 17px; background: rgba(255,255,255,0.02);
   border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.3);
   position: relative; overflow: hidden; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 .meter-fill {
   position: absolute; bottom: 0; left: 0; right: 0; height: 0%;
-  border-radius: 15px; transition: height 0.15s linear, box-shadow 0.3s, background 0.4s;
+  border-radius: 17px; transition: height 0.15s linear, box-shadow 0.3s, background 0.4s;
 }
 .fill-vol { background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.15)); box-shadow: 0 0 25px rgba(255,255,255,0.3); }
 .fill-pur { background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.15)); box-shadow: 0 0 25px rgba(255,255,255,0.3); }
@@ -221,17 +225,19 @@ html, body {
     </div>
   </div>
 
-  <div class="meter-col left">
-    <div class="meter-label">VOL</div>
-    <div class="meter-capsule"><div class="meter-fill fill-vol" id="vF"></div></div>
-    <div class="meter-val" id="vV">—</div>
-    <div class="m-warn" id="vW"></div>
-  </div>
+  <div class="bottom-section" id="botSec">
+    <div class="meter-col">
+      <div class="meter-label">VOL</div>
+      <div class="meter-capsule"><div class="meter-fill fill-vol" id="vF"></div></div>
+      <div class="meter-val" id="vV">—</div>
+      <div class="m-warn" id="vW"></div>
+    </div>
 
-  <div class="meter-col right">
-    <div class="meter-label">PURE</div>
-    <div class="meter-capsule"><div class="meter-fill fill-pur" id="pF"></div></div>
-    <div class="meter-val" id="pV">—</div>
+    <div class="meter-col">
+      <div class="meter-label">PURE</div>
+      <div class="meter-capsule"><div class="meter-fill fill-pur" id="pF"></div></div>
+      <div class="meter-val" id="pV">—</div>
+    </div>
   </div>
 </div>
 
@@ -287,10 +293,20 @@ function layout() {
   const p = Math.min(devicePixelRatio || 1, 2);
   cv.width = innerWidth * p; cv.height = innerHeight * p;
   cx.setTransform(p, 0, 0, p, 0, 0);
-  const ce = $('centerEl'), r = ce.getBoundingClientRect();
-  bCx = r.left + r.width / 2;
-  bCy = r.top + r.height / 2;
-  rR = Math.max(10, Math.min(innerWidth * 0.42, innerHeight * 0.42));
+
+  const topH = 80;
+  const botH = $('botSec').getBoundingClientRect().height || 250;
+  const availH = innerHeight - topH - botH;
+
+  bCx = innerWidth / 2;
+  bCy = topH + availH / 2;
+
+  rR = Math.max(10, Math.min(innerWidth * 0.45, availH * 0.45));
+
+  const ce = $('centerEl');
+  ce.style.height = availH + 'px';
+  ce.style.marginTop = topH + 'px';
+
   $('pillBox').style.left = bCx + 'px'; $('pillBox').style.top = bCy + 'px';
 }
 addEventListener('resize', layout); setTimeout(layout, 60);
@@ -382,7 +398,9 @@ function proc() {
   if(!running) return;
   ana.getFloatTimeDomainData(tBuf); ana.getFloatFrequencyData(fBuf);
   const sr = actx.sampleRate, r = rms(tBuf);
-  S.rmsRaw = r; S.vol = Math.min(1, r*12); S.dBspl = rmsToSpl(r);
+  S.rmsRaw = r;
+  S.vol = Math.min(1, Math.pow(r * 25, 0.85));
+  S.dBspl = rmsToSpl(r);
   S.playing = r > 0.003;
 
   if(S.playing) {
