@@ -38,20 +38,20 @@ html, body {
   z-index: 20; flex-shrink: 0;
 }
 .tuning {
-  font-size: 10px; font-weight: 600; letter-spacing: 1.5px; padding: 8px 16px;
-  border-radius: 20px; background: var(--glass); border: 1px solid var(--glass-border);
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px; padding: 8px 16px; 
+  border-radius: 20px; background: var(--glass); border: 1px solid var(--glass-border); 
   color: rgba(255,255,255,0.3); transition: all 0.5s; backdrop-filter: blur(10px);
 }
 .tuning.on { color: var(--fg); background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); box-shadow: 0 0 10px rgba(255,255,255,0.1); }
 .mic {
-  width: 44px; height: 44px; border-radius: 50%; background: var(--glass);
-  border: 1px solid var(--glass-border); backdrop-filter: blur(10px);
-  color: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%; background: var(--glass); 
+  border: 1px solid var(--glass-border); backdrop-filter: blur(10px); 
+  color: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; 
   font-size: 16px; cursor: pointer; transition: all 0.4s; position: relative;
 }
 .mic.on { color: var(--fg); border-color: rgba(255,255,255,0.3); box-shadow: 0 0 10px rgba(255,255,255,0.1); }
 .mic.on::after {
-  content: ''; position: absolute; inset: -6px; border-radius: 50%;
+  content: ''; position: absolute; inset: -6px; border-radius: 50%; 
   border: 1px solid rgba(255,255,255,0.3); animation: micPulse 2s ease-in-out infinite;
 }
 @keyframes micPulse { 0%, 100% { opacity: .3; transform: scale(1); } 50% { opacity: 0; transform: scale(1.2); } }
@@ -67,25 +67,23 @@ html, body {
   width: 250px; height: 250px; border-radius: 50%; position: relative;
 }
 
-/* Инструкция до начала игры */
 .intro-text {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   display: flex; flex-direction: column; align-items: center;
   transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;
 }
 .intro-text.hidden { opacity: 0; }
-.intro-main {
-  font-family: var(--serif); font-weight: 300; font-size: 12px; color: var(--gold);
-  letter-spacing: 4px; text-transform: uppercase; white-space: nowrap;
+.intro-main { 
+  font-family: var(--serif); font-weight: 300; font-size: 12px; color: var(--gold); 
+  letter-spacing: 4px; text-transform: uppercase; white-space: nowrap; 
   text-shadow: 0 0 20px rgba(212,175,55,0.5); animation: breath 4s ease-in-out infinite;
 }
-.intro-sub {
-  font-family: var(--sans); font-size: 8px; font-weight: 500; color: rgba(255,255,255,0.4);
+.intro-sub { 
+  font-family: var(--sans); font-size: 8px; font-weight: 500; color: rgba(255,255,255,0.4); 
   letter-spacing: 3px; margin-top: 8px; text-transform: uppercase; white-space: nowrap;
 }
 @keyframes breath { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
 
-/* Блок ноты */
 .note-block {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   transition: all 1s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; transform: scale(1);
@@ -113,7 +111,7 @@ html, body {
 /* ═══ FLOATING INTERVALS ═══ */
 #pillBox { position: fixed; z-index: 6; pointer-events: none; }
 .cpill {
-  position: absolute; left: 0; top: 0; opacity: 0;
+  position: absolute; left: 0; top: 0; opacity: 0; 
   transition: opacity 1.5s cubic-bezier(.4,0,.2,1);
   text-align: center; white-space: nowrap;
   animation: drift 8s ease-in-out infinite;
@@ -128,13 +126,13 @@ html, body {
   text-shadow: 0 0 30px rgba(0,0,0,0.9), 0 0 20px rgba(212,175,55,0.6);
 }
 .cpill-sub { display: flex; flex-direction: column; align-items: center; margin-top: 4px; }
-.cpill-int {
-  font-family: var(--sans); font-size: 9px; font-weight: 500; letter-spacing: 3px;
+.cpill-int { 
+  font-family: var(--sans); font-size: 9px; font-weight: 500; letter-spacing: 3px; 
   color: rgba(255,255,255,0.6); text-transform: uppercase;
   text-shadow: 0 2px 8px rgba(0,0,0,0.9);
 }
-.cpill-feel {
-  font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.4); margin-top: 2px;
+.cpill-feel { 
+  font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.4); margin-top: 2px; 
   font-family: var(--serif); font-style: italic; letter-spacing: 1px;
 }
 @keyframes drift {
@@ -144,35 +142,41 @@ html, body {
   75% { transform: translate(calc(var(--px) + 2px), calc(var(--py) + 4px)); }
 }
 
-/* ═══ BOTTOM METERS (NEUTRAL GLASS) ═══ */
+/* ═══ BOTTOM METERS (HORIZONTAL) ═══ */
 .bottom-section {
   position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 0 40px max(env(safe-area-inset-bottom), 40px);
-  display: flex; justify-content: center; gap: 60px; z-index: 20;
+  padding: 0 24px max(env(safe-area-inset-bottom), 30px);
+  display: flex; justify-content: space-between; align-items: flex-end;
   background: linear-gradient(0deg, rgba(3,3,5,0.9) 0%, rgba(3,3,5,0) 100%);
   pointer-events: none;
 }
-.meter-col {
-  display: flex; flex-direction: column; align-items: center; gap: 10px; width: 40px;
+.meter-col { 
+  display: flex; flex-direction: column; gap: 8px; width: calc(50% - 20px); max-width: 160px;
   pointer-events: auto;
 }
+.meter-col.left { align-items: flex-start; }
+.meter-col.right { align-items: flex-end; }
+
+.meter-header { display: flex; justify-content: space-between; width: 100%; align-items: baseline; }
 .meter-label { font-size: 9px; font-weight: 600; letter-spacing: 2px; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+.meter-val { font-family: var(--sans); font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.5); letter-spacing: 1px; transition: color 0.3s; }
+
 .meter-capsule {
-  width: 34px; height: 160px; border-radius: 17px; background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.3);
+  width: 100%; height: 16px; border-radius: 8px; background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
   position: relative; overflow: hidden; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 .meter-fill {
-  position: absolute; bottom: 0; left: 0; right: 0; height: 0%;
-  border-radius: 17px; transition: height 0.15s linear, box-shadow 0.3s, background 0.4s;
+  position: absolute; top: 0; bottom: 0; height: 100%; width: 0%;
+  border-radius: 8px; transition: width 0.15s linear, box-shadow 0.3s, background 0.4s;
 }
-.fill-vol { background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.15)); box-shadow: 0 0 25px rgba(255,255,255,0.3); }
-.fill-pur { background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.15)); box-shadow: 0 0 25px rgba(255,255,255,0.3); }
-.meter-val { font-family: var(--sans); font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.5); letter-spacing: 1px; transition: color 0.3s; margin-top: 4px; }
+.meter-col.left .meter-fill { left: 0; background: linear-gradient(90deg, rgba(255,255,255,0.15), rgba(255,255,255,0.8)); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+.meter-col.right .meter-fill { right: 0; background: linear-gradient(-90deg, rgba(255,255,255,0.15), rgba(255,255,255,0.8)); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+
 .m-warn {
   font-size: 9px; font-weight: 600; letter-spacing: 2px; opacity: 0; transition: all 0.5s;
-  text-transform: uppercase; border-radius: 4px; padding: 3px 8px; white-space: nowrap; pointer-events: none;
-  position: absolute; bottom: -30px;
+  text-transform: uppercase; border-radius: 4px; padding: 2px 6px; white-space: nowrap; pointer-events: none;
+  position: absolute; top: -25px; left: 0;
 }
 .m-warn.show { opacity: 1; }
 .m-warn.loud { color: #f59e0b; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); }
@@ -226,17 +230,21 @@ html, body {
   </div>
 
   <div class="bottom-section" id="botSec">
-    <div class="meter-col">
-      <div class="meter-label">VOL</div>
-      <div class="meter-capsule"><div class="meter-fill fill-vol" id="vF"></div></div>
-      <div class="meter-val" id="vV">—</div>
+    <div class="meter-col left" style="position:relative;">
       <div class="m-warn" id="vW"></div>
+      <div class="meter-header">
+        <span class="meter-label">VOL</span>
+        <span class="meter-val" id="vV">—</span>
+      </div>
+      <div class="meter-capsule"><div class="meter-fill fill-vol" id="vF"></div></div>
     </div>
-
-    <div class="meter-col">
-      <div class="meter-label">PURE</div>
+    
+    <div class="meter-col right">
+      <div class="meter-header">
+        <span class="meter-val" id="pV">—</span>
+        <span class="meter-label">PURE</span>
+      </div>
       <div class="meter-capsule"><div class="meter-fill fill-pur" id="pF"></div></div>
-      <div class="meter-val" id="pV">—</div>
     </div>
   </div>
 </div>
@@ -291,22 +299,15 @@ let cpills = [];
 
 function layout() {
   const p = Math.min(devicePixelRatio || 1, 2);
-  cv.width = innerWidth * p; cv.height = innerHeight * p;
+  cv.width = innerWidth * p; cv.height = innerHeight * p; 
   cx.setTransform(p, 0, 0, p, 0, 0);
-
-  const topH = 80;
-  const botH = $('botSec').getBoundingClientRect().height || 250;
-  const availH = innerHeight - topH - botH;
-
-  bCx = innerWidth / 2;
-  bCy = topH + availH / 2;
-
-  rR = Math.max(10, Math.min(innerWidth * 0.45, availH * 0.45));
-
-  const ce = $('centerEl');
-  ce.style.height = availH + 'px';
-  ce.style.marginTop = topH + 'px';
-
+  
+  bCx = innerWidth / 2; 
+  bCy = innerHeight / 2; // Центруем визуализацию по экрану
+  
+  // Максимизируем мандалу. Шкалы теперь внизу горизонтально и не мешают.
+  rR = Math.max(10, Math.min(innerWidth * 0.42, innerHeight * 0.35)); 
+  
   $('pillBox').style.left = bCx + 'px'; $('pillBox').style.top = bCy + 'px';
 }
 addEventListener('resize', layout); setTimeout(layout, 60);
@@ -333,11 +334,11 @@ function yin(buf, sr) {
 function f2nat(freq, refA) {
   const midi = 12 * Math.log2(freq/refA) + 69;
   let bestD = 999, bestN = null, bestM = 0;
-  for(let oct=1; oct<=7; oct++){
-    for(const nt of NAT){
-      const nm = nt.s + (oct+1)*12; const d = Math.abs(midi-nm);
-      if(d<bestD){ bestD=d; bestN=nt; bestM=nm; }
-    }
+  for(let oct=1; oct<=7; oct++){ 
+    for(const nt of NAT){ 
+      const nm = nt.s + (oct+1)*12; const d = Math.abs(midi-nm); 
+      if(d<bestD){ bestD=d; bestN=nt; bestM=nm; } 
+    } 
   }
   return { name: bestN.n, octave: Math.floor(bestM/12)-1, cents: Math.round((midi-bestM)*100), col: bestN.c };
 }
@@ -356,8 +357,8 @@ function purity(fD, fund, sr) {
   const bHz = sr/(fD.length*2), hw = Math.ceil(25/bHz);
   let hE = 0, tE = 0;
   for(let i=1; i<fD.length; i++){ const a=Math.max(0,(fD[i]+100)/80); tE+=a*a; }
-  for(let h=1; h<=6; h++){
-    const hb=Math.round(fund*h/bHz);
+  for(let h=1; h<=6; h++){ 
+    const hb=Math.round(fund*h/bHz); 
     for(let i=Math.max(1,hb-hw); i<=Math.min(fD.length-1,hb+hw); i++){ const a=Math.max(0,(fD[i]+100)/80); hE+=a*a; }
   }
   return tE>0 ? Math.min(1, hE/tE*1.6) : 0;
@@ -366,12 +367,16 @@ function purity(fD, fund, sr) {
 function rms(b) { let s=0; for(let i=0; i<b.length; i++) s+=b[i]*b[i]; return Math.sqrt(s/b.length); }
 function rmsToSpl(r) { return r>0 ? 20*Math.log10(r)+94 : 30; }
 
-const PILL_POS = [ {ax:-0.75, ay:-0.5}, {ax:0.75, ay:-0.5}, {ax:0, ay:-0.9} ];
+const PILL_POS = [ {ax:-0.7, ay:-0.6}, {ax:0.7, ay:-0.6}, {ax:0, ay:0.8} ];
 
 function buildPills(note, oct) {
   const box = $('pillBox'); cpills.forEach(p => p.el && p.el.remove()); cpills = [];
   const pairs = CONS[note] || [];
-  const pr = rR * 1.1;
+  
+  // Жестко ограничиваем вылет интервалов за пределы ширины телефона
+  const maxPr = (innerWidth / 2) - 50; 
+  const pr = Math.min(rR * 1.05, maxPr); 
+
   pairs.forEach((p, i) => {
     const pos = PILL_POS[i % PILL_POS.length];
     const px = pos.ax * pr, py = pos.ay * pr;
@@ -379,11 +384,11 @@ function buildPills(note, oct) {
     el.style.setProperty('--px', px + 'px'); el.style.setProperty('--py', py + 'px');
     el.style.transform = `translate(calc(-50% + ${px}px),calc(-50% + ${py}px))`;
     el.style.animationDelay = (i * 1.2) + 's';
-
+    
     const ntData = NAT.find(x => x.n === p.n) || {c: [200,200,200]};
     const cStr = rgb(ntData.c);
     const ts = `0 0 30px rgba(0,0,0,0.9), 0 0 20px rgba(${ntData.c[0]},${ntData.c[1]},${ntData.c[2]},0.6)`;
-
+    
     el.innerHTML = `<div class="cpill-inner"><div class="cpill-n" style="color:${cStr}; text-shadow:${ts}">${p.n}${oct}</div><div class="cpill-sub"><span class="cpill-int">${p.i}</span><span class="cpill-feel">${p.f}</span></div></div>`;
     box.appendChild(el); cpills.push({el, delay: i * 350});
   });
@@ -398,11 +403,13 @@ function proc() {
   if(!running) return;
   ana.getFloatTimeDomainData(tBuf); ana.getFloatFrequencyData(fBuf);
   const sr = actx.sampleRate, r = rms(tBuf);
-  S.rmsRaw = r;
-  S.vol = Math.min(1, Math.pow(r * 25, 0.85));
+  S.rmsRaw = r; 
+  
+  // Логарифмическая модель чувствительности громкости для комнатного шума (35-85 dB)
   S.dBspl = rmsToSpl(r);
-  S.playing = r > 0.003;
-
+  S.vol = Math.max(0, Math.min(1, (S.dBspl - 40) / 45)); 
+  S.playing = r > 0.003; 
+  
   if(S.playing) {
     silenceFrames = 0;
     if(S.fc % 3 === 0) {
@@ -411,7 +418,7 @@ function proc() {
         S.freq = f; updTuning(f);
         const ref = S.tuning || 440; const info = f2nat(f, ref);
         S.noteName = info.name; S.noteOct = info.octave; S.cents = info.cents; S.col = info.col;
-
+        
         const key = info.name + info.octave;
         if(key === S.cand) {
           S.cCount++;
@@ -420,12 +427,12 @@ function proc() {
             S.stable = 0; S.sugShow = false; hidePills(); buildPills(info.name, info.octave);
           }
         } else { S.cand = key; S.cCount = 0; }
-
+        
         S.pur = purity(fBuf, f, sr);
       }
     }
-    if(S.confirmed) {
-      S.stable = Math.min(S.stable + 1, S.maxStable);
+    if(S.confirmed) { 
+      S.stable = Math.min(S.stable + 1, S.maxStable); 
       if(S.stable >= S.maxStable && !S.sugShow) { S.sugShow = true; showPills(); }
     }
   } else {
@@ -437,11 +444,11 @@ function proc() {
 }
 
 function upd() {
-  S.dVol = lp(S.dVol, S.vol, 0.08);
+  S.dVol = lp(S.dVol, S.vol, 0.08); 
   S.dPur = lp(S.dPur, S.pur, 0.04);
   S.dCol = lpc(S.dCol, S.playing && S.confirmed ? S.confCol : [212, 175, 55], 0.03);
   S.dFreq = lp(S.dFreq, S.freq, 0.05); S.dCents = lp(S.dCents, S.cents, 0.05);
-
+  
   S.hTimer++;
   if(Math.abs(S.dCents - S.hCents) > 1 || S.hTimer > 40) { S.hCents = S.dCents; S.hTimer = 0; }
   if(Math.abs(S.dFreq - S.hFreq) > 0.5) { S.hFreq = S.dFreq; }
@@ -449,13 +456,13 @@ function upd() {
   if(S.confirmed && S.playing) {
     $('introTxt').classList.add('hidden');
     $('noteBlock').classList.remove('hidden');
-
+    
     $('nN').textContent = S.confirmed;
     $('nO').textContent = 'OCTAVE ' + S.confOct;
     $('nN').style.color = rgb(S.dCol);
     $('nN').style.textShadow = `0 0 50px ${rgba(S.dCol, 0.6)}, 0 0 100px ${rgba(S.dCol, 0.3)}`;
     $('nHz').textContent = S.hFreq.toFixed(1) + ' Hz';
-
+    
     const cv = Math.round(S.hCents);
     $('nC').textContent = (cv >= 0 ? '+' : '') + cv + ' ¢';
     $('nC').style.color = Math.abs(cv) < 5 ? '#4ade80' : Math.abs(cv) < 15 ? 'var(--gold)' : '#ef4444';
@@ -465,27 +472,23 @@ function upd() {
   }
 
   const tb = $('tun');
-  if(S.tuning) { tb.textContent = S.tuning + ' Hz'; tb.classList.add('on'); }
+  if(S.tuning) { tb.textContent = S.tuning + ' Hz'; tb.classList.add('on'); } 
   else { tb.textContent = '—'; tb.classList.remove('on'); }
 
   const spl = Math.round(S.dBspl); const loud = spl >= 85, danger = spl >= 95; const vp = Math.round(S.dVol * 100);
-
-  $('vF').style.height = vp + '%';
-  $('vF').style.background = danger ? 'linear-gradient(180deg, #ef4444, rgba(239,68,68,0.3))' : loud ? 'linear-gradient(180deg, #f59e0b, rgba(245,158,11,0.3))' : `linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.15))`;
+  
+  $('vF').style.width = vp + '%';
   $('vV').textContent = spl > 35 ? '~' + spl + ' dB' : '—';
-  $('vV').style.color = 'rgba(255,255,255,0.6)';
-
+  
   const vw = $('vW');
   if(danger) { vw.textContent = 'DANGER'; vw.className = 'm-warn danger show'; }
   else if(loud) { vw.textContent = 'LOUD'; vw.className = 'm-warn loud show'; }
   else { vw.className = 'm-warn'; }
-
+  
   const pp = Math.round(S.dPur * 100);
-  $('pF').style.height = pp + '%';
-  $('pF').style.background = `linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.15))`;
+  $('pF').style.width = pp + '%';
   $('pV').textContent = S.playing ? pp + '%' : '—';
-  $('pV').style.color = 'rgba(255,255,255,0.6)';
-
+  
   $('vF').style.boxShadow = `0 0 ${15 + vp*0.4}px ${danger ? 'rgba(239,68,68,0.6)' : loud ? 'rgba(245,158,11,0.6)' : `rgba(255,255,255,${vp/150})`}`;
   $('pF').style.boxShadow = `0 0 ${15 + pp*0.4}px rgba(255,255,255,${pp/150})`;
 }
@@ -493,7 +496,7 @@ function upd() {
 function draw() {
   const W = innerWidth, H = innerHeight;
   S.time += 0.005 + (S.dVol * 0.02);
-
+  
   cx.fillStyle = '#030305';
   cx.fillRect(0, 0, W, H);
   if(!bCx) return;
@@ -505,116 +508,116 @@ function draw() {
   cx.fillStyle = bgGlow;
   cx.fillRect(0, 0, W, H);
 
-  const steps = 64;
+  const steps = 64; 
   if(fBuf && running) {
     const sr = actx.sampleRate, bins = fBuf.length, maxF = 2000, minF = 40;
     for(let i=0; i<steps; i++) {
       const f = minF * Math.pow(maxF/minF, i/steps);
       const bin = Math.round(f / (sr / (bins * 2)));
       const raw = bin >= 0 && bin < bins ? Math.max(0, (fBuf[bin] + 100) / 80) : 0;
-      S.specSmooth[i] = lp(S.specSmooth[i] || 0, raw, 0.1);
+      S.specSmooth[i] = lp(S.specSmooth[i] || 0, raw, 0.1); 
     }
   }
 
   cx.save();
   cx.translate(bCx, bCy);
-
+  
   cx.globalCompositeOperation = 'screen';
   const volImpact = S.dVol;
-  const numPetals = 24;
-
+  const numPetals = 24; 
+  
   for(let layer = 0; layer < 4; layer++) {
-    const layerOffset = layer * (Math.PI / numPetals);
+    const layerOffset = layer * (Math.PI / numPetals); 
     const rotation = S.time * (layer % 2 === 0 ? 0.1 : -0.15);
-
+    
     for(let i = 0; i < numPetals; i++) {
-      const specIdx = i < numPetals/2 ?
-          Math.floor((i / (numPetals/2)) * steps) :
+      const specIdx = i < numPetals/2 ? 
+          Math.floor((i / (numPetals/2)) * steps) : 
           Math.floor(((numPetals - i) / (numPetals/2)) * steps);
-
+          
       const energy = S.specSmooth[specIdx] || 0;
       const angle = (i / numPetals) * Math.PI * 2 + rotation + layerOffset;
-
-      const baseR = rR * 0.55;
+      
+      const baseR = rR * 0.55; 
       const maxStretch = rR * (0.4 + layer * 0.2);
-
+      
       let stretchDelta = (energy * maxStretch * (0.3 + volImpact * 0.7)) + (Math.sin(S.time * 3 + i) * 8 * volImpact);
-      stretchDelta = Math.max(0.1, stretchDelta);
+      stretchDelta = Math.max(0.1, stretchDelta); 
       const stretchR = baseR + stretchDelta;
-
+      
       cx.save();
       cx.rotate(angle);
-
+      
       cx.beginPath();
       cx.moveTo(0, baseR * 0.8);
-
-      const cpW = baseR * (0.15 + energy * 0.1);
-
+      
+      const cpW = baseR * (0.15 + energy * 0.1); 
+      
       cx.quadraticCurveTo(cpW, baseR + stretchDelta * 0.5, 0, stretchR);
       cx.quadraticCurveTo(-cpW, baseR + stretchDelta * 0.5, 0, baseR * 0.8);
-
+      
       const pGrad = cx.createRadialGradient(0, baseR, 0, 0, stretchR, stretchDelta);
       pGrad.addColorStop(0, rgba(S.dCol, 0.15 + layer * 0.05 + energy * 0.2));
       pGrad.addColorStop(0.6, rgba(S.dCol, 0.05 + energy * 0.1));
       pGrad.addColorStop(1, 'rgba(0,0,0,0)');
-
+      
       cx.fillStyle = pGrad;
       cx.fill();
-
+      
       cx.strokeStyle = rgba(S.dCol, 0.1 + energy * 0.3);
       cx.lineWidth = 1;
       cx.stroke();
-
+      
       cx.restore();
     }
   }
 
   cx.restore();
-
+  
   const cgRadius = Math.max(1, rR * 0.55);
   const cg = cx.createRadialGradient(bCx, bCy, 0, bCx, bCy, cgRadius);
-  cg.addColorStop(0, 'rgba(3,3,5,0.9)');
+  cg.addColorStop(0, 'rgba(3,3,5,0.9)'); 
   cg.addColorStop(0.7, 'rgba(3,3,5,0.7)');
   cg.addColorStop(1, 'rgba(3,3,5,0)');
   cx.globalCompositeOperation = 'source-over';
-  cx.fillStyle = cg;
+  cx.fillStyle = cg; 
   cx.fillRect(0, 0, W, H);
 
   cx.save();
   cx.translate(bCx, bCy);
 
   const prog = S.stable / S.maxStable;
-  const ringR = rR * 0.45;
+  const ringR = rR * 0.45; 
 
   cx.beginPath(); cx.arc(0, 0, ringR, 0, Math.PI*2);
   cx.strokeStyle = rgba(S.dCol, 0.08); cx.lineWidth = 2; cx.stroke();
 
   if(prog > 0.001) {
     cx.globalCompositeOperation = 'source-over';
-
+    
     cx.beginPath();
-    const ringPts = 200;
+    const ringPts = 300; 
     const targetPts = Math.floor(ringPts * prog);
-
+    
     let highEnergy = 0;
     for(let k=30; k<steps; k++) highEnergy += S.specSmooth[k] || 0;
     const timbreFactor = Math.min(1, highEnergy * 0.1);
     const pitchWaveSpd = 1 + (S.hFreq % 50) / 50;
-
+    
     for(let i=0; i<=targetPts; i++) {
       const ang = -Math.PI/2 + (i/ringPts) * Math.PI * 2;
-
+      
       const w1 = Math.sin(ang * 3 + S.time * pitchWaveSpd * 2);
       const w2 = Math.cos(ang * 5 - S.time * 1.5);
-      const w3 = Math.sin(ang * 8 + S.time * 3) * timbreFactor;
-
-      const mod = (w1 + w2 * 0.5 + w3) * (3 + timbreFactor * 5) * S.dVol * prog;
+      const w3 = Math.sin(ang * 8 + S.time * 3) * timbreFactor; 
+      
+      const mod = (w1 + w2 * 0.5 + w3) * (2 + timbreFactor * 3) * S.dVol * prog;
       const r = ringR + mod;
-
+      
       if(i===0) cx.moveTo(Math.cos(ang)*r, Math.sin(ang)*r);
       else cx.lineTo(Math.cos(ang)*r, Math.sin(ang)*r);
     }
-
+    
     cx.strokeStyle = rgba(S.dCol, 0.6 + 0.4*prog);
     cx.lineWidth = 2 + 3*prog;
     cx.lineCap = 'round';
@@ -641,9 +644,9 @@ function draw() {
     for (let i = S.particles.length - 1; i >= 0; i--) {
       let p = S.particles[i];
       p.r += p.speed;
-      p.ang += 0.015;
+      p.ang += 0.015; 
       p.life -= p.decay;
-
+      
       if (p.life <= 0) {
         S.particles.splice(i, 1);
       } else {
@@ -655,7 +658,7 @@ function draw() {
         cx.fill();
       }
     }
-    cx.shadowBlur = 0;
+    cx.shadowBlur = 0; 
   }
 
   cx.restore();
