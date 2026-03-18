@@ -59,7 +59,7 @@ html, body {
 /* ═══ CENTER DIAL ═══ */
 .center-dial {
   flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  pointer-events: none; position: relative; margin-bottom: 20px;
+  pointer-events: none; position: relative;
 }
 .dial-content {
   text-align: center; z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -67,6 +67,7 @@ html, body {
   width: 250px; height: 250px; border-radius: 50%; position: relative;
 }
 
+/* Инструкция до начала игры */
 .intro-text {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   display: flex; flex-direction: column; align-items: center;
@@ -76,14 +77,15 @@ html, body {
 .intro-main {
   font-family: var(--serif); font-weight: 300; font-size: 12px; color: var(--gold);
   letter-spacing: 4px; text-transform: uppercase; white-space: nowrap;
-  text-shadow: 0 0 20px rgba(212,175,55,0.3); animation: breath 4s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(212,175,55,0.5); animation: breath 4s ease-in-out infinite;
 }
 .intro-sub {
-  font-family: var(--sans); font-size: 8px; font-weight: 500; color: rgba(255,255,255,0.3);
+  font-family: var(--sans); font-size: 8px; font-weight: 500; color: rgba(255,255,255,0.4);
   letter-spacing: 3px; margin-top: 8px; text-transform: uppercase; white-space: nowrap;
 }
 @keyframes breath { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
 
+/* Блок ноты */
 .note-block {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   transition: all 1s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; transform: scale(1);
@@ -93,7 +95,7 @@ html, body {
 .main-note {
   font-family: var(--serif); font-weight: 400; font-size: clamp(70px, 18vw, 110px);
   line-height: 1; color: var(--gold); letter-spacing: -2px;
-  text-shadow: 0 0 40px var(--gold-dim), 0 0 80px rgba(212, 175, 55, 0.1);
+  text-shadow: 0 0 50px var(--gold-dim), 0 0 100px rgba(212, 175, 55, 0.2);
 }
 .n-cents {
   font-family: var(--sans); font-size: 14px; font-weight: 500; letter-spacing: 2px;
@@ -101,11 +103,11 @@ html, body {
 }
 .octave-label {
   font-family: var(--sans); font-size: 12px; font-weight: 400; letter-spacing: 3px;
-  color: rgba(255,255,255,0.4); margin-top: 12px; text-transform: uppercase;
+  color: rgba(255,255,255,0.6); margin-top: 12px; text-transform: uppercase;
 }
 .tuning-hz {
   font-family: var(--sans); font-size: 12px; font-weight: 200; letter-spacing: 1px;
-  color: rgba(255,255,255,0.3); margin-top: 6px; min-height: 18px;
+  color: rgba(255,255,255,0.4); margin-top: 6px; min-height: 18px;
 }
 
 /* ═══ FLOATING INTERVALS ═══ */
@@ -121,18 +123,18 @@ html, body {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
 .cpill-n {
-  font-family: var(--serif); font-weight: 300; font-size: 34px; color: var(--gold);
+  font-family: var(--serif); font-weight: 300; font-size: 30px; color: var(--gold);
   line-height: 1; transition: color 0.5s;
-  text-shadow: 0 0 30px rgba(0,0,0,0.8), 0 0 15px rgba(212,175,55,0.4);
+  text-shadow: 0 0 30px rgba(0,0,0,0.9), 0 0 20px rgba(212,175,55,0.6);
 }
-.cpill-sub { display: flex; flex-direction: column; align-items: center; margin-top: 6px; }
+.cpill-sub { display: flex; flex-direction: column; align-items: center; margin-top: 4px; }
 .cpill-int {
-  font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 3px;
-  color: rgba(255,255,255,0.5); text-transform: uppercase;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  font-family: var(--sans); font-size: 9px; font-weight: 500; letter-spacing: 3px;
+  color: rgba(255,255,255,0.6); text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.9);
 }
 .cpill-feel {
-  font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.3); margin-top: 4px;
+  font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.4); margin-top: 2px;
   font-family: var(--serif); font-style: italic; letter-spacing: 1px;
 }
 @keyframes drift {
@@ -142,29 +144,31 @@ html, body {
   75% { transform: translate(calc(var(--px) + 2px), calc(var(--py) + 4px)); }
 }
 
-/* ═══ BOTTOM METERS ═══ */
-.bottom-section {
-  padding: 0 40px max(env(safe-area-inset-bottom), 30px);
-  display: flex; justify-content: center; gap: 50px; z-index: 20;
-  background: linear-gradient(0deg, rgba(3,3,5,0.9) 0%, rgba(3,3,5,0) 100%);
+/* ═══ SIDE METERS (NEUTRAL GLASS) ═══ */
+.meter-col {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 10px; width: 40px;
+  z-index: 20; pointer-events: auto;
 }
-.meter-col { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 60px; }
-.meter-label { font-size: 10px; font-weight: 500; letter-spacing: 2px; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+.meter-col.left { left: 16px; }
+.meter-col.right { right: 16px; }
+.meter-label { font-size: 9px; font-weight: 600; letter-spacing: 2px; color: rgba(255,255,255,0.4); text-transform: uppercase; }
 .meter-capsule {
-  width: 44px; height: 110px; border-radius: 22px; background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.06); box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.3);
+  width: 30px; height: 180px; border-radius: 15px; background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.3);
   position: relative; overflow: hidden; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 .meter-fill {
   position: absolute; bottom: 0; left: 0; right: 0; height: 0%;
-  border-radius: 22px; transition: height 0.15s linear, box-shadow 0.3s, background 0.4s;
+  border-radius: 15px; transition: height 0.15s linear, box-shadow 0.3s, background 0.4s;
 }
-.fill-vol { background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.1)); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
-.fill-pur { background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.1)); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
-.meter-val { font-family: var(--sans); font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.5); letter-spacing: 1px; transition: color 0.3s; margin-top: 4px; }
+.fill-vol { background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.15)); box-shadow: 0 0 25px rgba(255,255,255,0.3); }
+.fill-pur { background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.15)); box-shadow: 0 0 25px rgba(255,255,255,0.3); }
+.meter-val { font-family: var(--sans); font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.5); letter-spacing: 1px; transition: color 0.3s; margin-top: 4px; }
 .m-warn {
   font-size: 9px; font-weight: 600; letter-spacing: 2px; opacity: 0; transition: all 0.5s;
   text-transform: uppercase; border-radius: 4px; padding: 3px 8px; white-space: nowrap; pointer-events: none;
+  position: absolute; bottom: -30px;
 }
 .m-warn.show { opacity: 1; }
 .m-warn.loud { color: #f59e0b; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); }
@@ -217,19 +221,17 @@ html, body {
     </div>
   </div>
 
-  <div class="bottom-section">
-    <div class="meter-col">
-      <div class="meter-label">Volume</div>
-      <div class="meter-capsule"><div class="meter-fill fill-vol" id="vF"></div></div>
-      <div class="meter-val" id="vV">—</div>
-      <div class="m-warn" id="vW"></div>
-    </div>
-    <div class="meter-col">
-      <div class="meter-label">Clarity</div>
-      <div class="meter-capsule"><div class="meter-fill fill-pur" id="pF"></div></div>
-      <div class="meter-val" id="pV">—</div>
-      <div class="m-warn" style="opacity:0">GAP</div>
-    </div>
+  <div class="meter-col left">
+    <div class="meter-label">VOL</div>
+    <div class="meter-capsule"><div class="meter-fill fill-vol" id="vF"></div></div>
+    <div class="meter-val" id="vV">—</div>
+    <div class="m-warn" id="vW"></div>
+  </div>
+
+  <div class="meter-col right">
+    <div class="meter-label">PURE</div>
+    <div class="meter-capsule"><div class="meter-fill fill-pur" id="pF"></div></div>
+    <div class="meter-val" id="pV">—</div>
   </div>
 </div>
 
@@ -287,8 +289,8 @@ function layout() {
   cx.setTransform(p, 0, 0, p, 0, 0);
   const ce = $('centerEl'), r = ce.getBoundingClientRect();
   bCx = r.left + r.width / 2;
-  bCy = r.top + r.height / 2 - 15;
-  rR = Math.max(10, Math.min(innerWidth, innerHeight) * 0.32);
+  bCy = r.top + r.height / 2;
+  rR = Math.max(10, Math.min(innerWidth * 0.42, innerHeight * 0.42));
   $('pillBox').style.left = bCx + 'px'; $('pillBox').style.top = bCy + 'px';
 }
 addEventListener('resize', layout); setTimeout(layout, 60);
@@ -348,7 +350,7 @@ function purity(fD, fund, sr) {
 function rms(b) { let s=0; for(let i=0; i<b.length; i++) s+=b[i]*b[i]; return Math.sqrt(s/b.length); }
 function rmsToSpl(r) { return r>0 ? 20*Math.log10(r)+94 : 30; }
 
-const PILL_POS = [ {ax:-0.75, ay:-0.45}, {ax:0.75, ay:-0.45}, {ax:0, ay:-0.85} ];
+const PILL_POS = [ {ax:-0.75, ay:-0.5}, {ax:0.75, ay:-0.5}, {ax:0, ay:-0.9} ];
 
 function buildPills(note, oct) {
   const box = $('pillBox'); cpills.forEach(p => p.el && p.el.remove()); cpills = [];
@@ -364,7 +366,7 @@ function buildPills(note, oct) {
 
     const ntData = NAT.find(x => x.n === p.n) || {c: [200,200,200]};
     const cStr = rgb(ntData.c);
-    const ts = `0 0 30px rgba(0,0,0,0.8), 0 0 15px rgba(${ntData.c[0]},${ntData.c[1]},${ntData.c[2]},0.4)`;
+    const ts = `0 0 30px rgba(0,0,0,0.9), 0 0 20px rgba(${ntData.c[0]},${ntData.c[1]},${ntData.c[2]},0.6)`;
 
     el.innerHTML = `<div class="cpill-inner"><div class="cpill-n" style="color:${cStr}; text-shadow:${ts}">${p.n}${oct}</div><div class="cpill-sub"><span class="cpill-int">${p.i}</span><span class="cpill-feel">${p.f}</span></div></div>`;
     box.appendChild(el); cpills.push({el, delay: i * 350});
@@ -433,7 +435,7 @@ function upd() {
     $('nN').textContent = S.confirmed;
     $('nO').textContent = 'OCTAVE ' + S.confOct;
     $('nN').style.color = rgb(S.dCol);
-    $('nN').style.textShadow = `0 0 40px ${rgba(S.dCol, 0.4)}, 0 0 80px ${rgba(S.dCol, 0.2)}`;
+    $('nN').style.textShadow = `0 0 50px ${rgba(S.dCol, 0.6)}, 0 0 100px ${rgba(S.dCol, 0.3)}`;
     $('nHz').textContent = S.hFreq.toFixed(1) + ' Hz';
 
     const cv = Math.round(S.hCents);
@@ -451,9 +453,9 @@ function upd() {
   const spl = Math.round(S.dBspl); const loud = spl >= 85, danger = spl >= 95; const vp = Math.round(S.dVol * 100);
 
   $('vF').style.height = vp + '%';
-  $('vF').style.background = danger ? 'linear-gradient(180deg, #ef4444, rgba(239,68,68,0.3))' : loud ? 'linear-gradient(180deg, #f59e0b, rgba(245,158,11,0.3))' : `linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.1))`;
+  $('vF').style.background = danger ? 'linear-gradient(180deg, #ef4444, rgba(239,68,68,0.3))' : loud ? 'linear-gradient(180deg, #f59e0b, rgba(245,158,11,0.3))' : `linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.15))`;
   $('vV').textContent = spl > 35 ? '~' + spl + ' dB' : '—';
-  $('vV').style.color = 'rgba(255,255,255,0.5)';
+  $('vV').style.color = 'rgba(255,255,255,0.6)';
 
   const vw = $('vW');
   if(danger) { vw.textContent = 'DANGER'; vw.className = 'm-warn danger show'; }
@@ -462,12 +464,12 @@ function upd() {
 
   const pp = Math.round(S.dPur * 100);
   $('pF').style.height = pp + '%';
-  $('pF').style.background = `linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.1))`;
+  $('pF').style.background = `linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.15))`;
   $('pV').textContent = S.playing ? pp + '%' : '—';
-  $('pV').style.color = 'rgba(255,255,255,0.5)';
+  $('pV').style.color = 'rgba(255,255,255,0.6)';
 
-  $('vF').style.boxShadow = `0 0 ${10 + vp*0.3}px ${danger ? 'rgba(239,68,68,0.5)' : loud ? 'rgba(245,158,11,0.5)' : `rgba(255,255,255,${vp/200})`}`;
-  $('pF').style.boxShadow = `0 0 ${10 + pp*0.3}px rgba(255,255,255,${pp/200})`;
+  $('vF').style.boxShadow = `0 0 ${15 + vp*0.4}px ${danger ? 'rgba(239,68,68,0.6)' : loud ? 'rgba(245,158,11,0.6)' : `rgba(255,255,255,${vp/150})`}`;
+  $('pF').style.boxShadow = `0 0 ${15 + pp*0.4}px rgba(255,255,255,${pp/150})`;
 }
 
 function draw() {
@@ -480,7 +482,7 @@ function draw() {
 
   const bgGlowRadius = Math.max(1, Math.max(W, H) * 0.6);
   const bgGlow = cx.createRadialGradient(bCx, bCy, 0, bCx, bCy, bgGlowRadius);
-  bgGlow.addColorStop(0, rgba(S.dCol, 0.06 + S.dVol * 0.08));
+  bgGlow.addColorStop(0, rgba(S.dCol, 0.12 + S.dVol * 0.15));
   bgGlow.addColorStop(1, 'rgba(3,3,5,0)');
   cx.fillStyle = bgGlow;
   cx.fillRect(0, 0, W, H);
@@ -534,14 +536,14 @@ function draw() {
       cx.quadraticCurveTo(-cpW, baseR + stretchDelta * 0.5, 0, baseR * 0.8);
 
       const pGrad = cx.createRadialGradient(0, baseR, 0, 0, stretchR, stretchDelta);
-      pGrad.addColorStop(0, rgba(S.dCol, 0.08 + layer * 0.02 + energy * 0.1));
-      pGrad.addColorStop(0.6, rgba(S.dCol, 0.02 + energy * 0.05));
+      pGrad.addColorStop(0, rgba(S.dCol, 0.15 + layer * 0.05 + energy * 0.2));
+      pGrad.addColorStop(0.6, rgba(S.dCol, 0.05 + energy * 0.1));
       pGrad.addColorStop(1, 'rgba(0,0,0,0)');
 
       cx.fillStyle = pGrad;
       cx.fill();
 
-      cx.strokeStyle = rgba(S.dCol, 0.05 + energy * 0.25);
+      cx.strokeStyle = rgba(S.dCol, 0.1 + energy * 0.3);
       cx.lineWidth = 1;
       cx.stroke();
 
@@ -567,7 +569,7 @@ function draw() {
   const ringR = rR * 0.45;
 
   cx.beginPath(); cx.arc(0, 0, ringR, 0, Math.PI*2);
-  cx.strokeStyle = rgba(S.dCol, 0.05); cx.lineWidth = 2; cx.stroke();
+  cx.strokeStyle = rgba(S.dCol, 0.08); cx.lineWidth = 2; cx.stroke();
 
   if(prog > 0.001) {
     cx.globalCompositeOperation = 'source-over';
@@ -579,7 +581,6 @@ function draw() {
     let highEnergy = 0;
     for(let k=30; k<steps; k++) highEnergy += S.specSmooth[k] || 0;
     const timbreFactor = Math.min(1, highEnergy * 0.1);
-
     const pitchWaveSpd = 1 + (S.hFreq % 50) / 50;
 
     for(let i=0; i<=targetPts; i++) {
@@ -596,11 +597,11 @@ function draw() {
       else cx.lineTo(Math.cos(ang)*r, Math.sin(ang)*r);
     }
 
-    cx.strokeStyle = rgba(S.dCol, 0.5 + 0.5*prog);
-    cx.lineWidth = 2 + 2*prog;
+    cx.strokeStyle = rgba(S.dCol, 0.6 + 0.4*prog);
+    cx.lineWidth = 2 + 3*prog;
     cx.lineCap = 'round';
     cx.shadowColor = rgb(S.dCol);
-    cx.shadowBlur = 15 * prog;
+    cx.shadowBlur = 20 * prog + 10;
     cx.stroke();
 
     if(prog >= 0.99 && S.playing) {
@@ -611,7 +612,7 @@ function draw() {
           speed: 0.5 + Math.random() * 2,
           life: 1,
           decay: 0.005 + Math.random() * 0.015,
-          size: 1 + Math.random() * 2.5
+          size: 1 + Math.random() * 3
         });
       }
     }
@@ -628,8 +629,8 @@ function draw() {
       if (p.life <= 0) {
         S.particles.splice(i, 1);
       } else {
-        cx.fillStyle = rgba(S.dCol, p.life * 0.8);
-        cx.shadowBlur = 10 * p.life;
+        cx.fillStyle = rgba(S.dCol, p.life);
+        cx.shadowBlur = 15 * p.life;
         cx.shadowColor = rgb(S.dCol);
         cx.beginPath();
         cx.arc(Math.cos(p.ang) * p.r, Math.sin(p.ang) * p.r, p.size * p.life, 0, Math.PI*2);
