@@ -390,7 +390,7 @@ function layout() {
   bCx = innerWidth / 2;
   bCy = innerHeight / 2 - 20;
 
-  rR = Math.max(10, Math.min(innerWidth * 0.46, innerHeight * 0.42));
+  rR = Math.max(10, Math.min(innerWidth * 0.60, innerHeight * 0.55));
 
   const cg = $('centerGroup');
   cg.style.left = bCx + 'px';
@@ -461,8 +461,8 @@ function buildPills(note, oct) {
   const box = $('pillBox'); cpills.forEach(p => p.el && p.el.remove()); cpills = [];
   const pairs = CONS[note] || [];
 
-  const pr = rR + 70;
-  const angles = [-Math.PI * 0.75, -Math.PI * 0.5, -Math.PI * 0.25];
+  const pr = rR * 0.75;
+  const angles = [-Math.PI * 0.25, -Math.PI * 0.5, -Math.PI * 0.75]; // Kvarta right, Kvinta top-center, Tercija left
 
   // Screen bounds for clamping (relative to pillBox centre at bCx, bCy)
   const PILL_W = 90, PILL_H = 68;
